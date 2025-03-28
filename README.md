@@ -64,11 +64,4 @@ heroku open
 ```
 
 📌 Requirements
-Python 3.x
-Tkinter (Built-in with Python)
-Flask (For web integration)
-
-🏆 Future Improvements
-✔️ Add a timer to challenge players
-✔️ Add sound effects for correct and incorrect guesses
-✔️ Improve the UI design with better visuals
+Python 3.x, Tkinter (Built-in with Python) and Flask (For web integration)
