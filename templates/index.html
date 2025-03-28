@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the Number</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 320px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+        .btn-secondary {
+            background-color: #dc3545;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #c82333;
+        }
+        #result {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #333;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+        #result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+    <script>
+        let attempts = 0;
+
+        function submitGuess() {
+            let guessInput = document.getElementById('guess');
+            let guess = guessInput.value;
+
+            if (!guess) {
+                showMessage("Please enter a number!");
+                return;
+            }
+
+            attempts++;
+            fetch('/guess', {
+                method: 'POST',
+                body: new URLSearchParams({ 'guess': guess }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                showMessage(data.message);
+                document.getElementById('attempts').innerText = `Attempts: ${attempts}`;
+                
+                if (data.reset) {
+                    setTimeout(() => location.reload(), 2000);
+                }
+            });
+
+            guessInput.value = ''; // Clear input after submission
+        }
+
+        function showMessage(message) {
+            let result = document.getElementById('result');
+            result.classList.remove('show'); // Remove previous animation
+            setTimeout(() => { // Delay to reset animation
+                result.innerText = message;
+                result.classList.add('show'); // Reapply animation effect
+            }, 50);
+        }
+
+        function restartGame() {
+            location.reload();
+        }
+
+        // Listen for Enter key to submit the guess
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('guess').addEventListener("keypress", function(event) {
+                if (event.key === "Enter") {
+                    submitGuess();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Guess the Number (1-100)</h1>
+        <p>Try to guess the secret number!</p>
+        <input type="number" id="guess" min="1" max="100" placeholder="Enter your guess">
+        <button class="btn-primary" onclick="submitGuess()">Submit</button>
+        <button class="btn-secondary" onclick="restartGame()">Restart</button>
+        <p id="attempts">Attempts: 0</p>
+        <p id="result"></p>
+    </div>
+</body>
+</html>
