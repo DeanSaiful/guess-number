@@ -17,68 +17,56 @@ Try to guess the correct number between **1 and 100**! 🔢✨
 ## 📥 How to Download and Run the Project
 
 ### Clone the Repository
-```bash
+```
 git clone https://github.com/yourusername/guess-the-number.git
 ```
 
 ### Navigate to the Project Folder
 
-```bash
-Copy
-Edit
+```
 cd guess-the-number
-Install Dependencies
 ```
 
-nginx
-Copy
-Edit
+### Install Dependencies
+```
 pip install -r requirements.txt
-Run the Game
+```
 
-nginx
-Copy
-Edit
+### Run the Game
+```
 python app.py
-🌍 Deploying the App Online (Heroku)
+```
+
+## 🌍 Deploying the App Online (Heroku)
 If you want to deploy this app on Heroku, follow these steps:
 
 Login to Heroku
-
-nginx
-Copy
-Edit
+```
 heroku login
+```
+
 Create a New App
-
-pgsql
-Copy
-Edit
+```
 heroku create your-app-name
-Push the Code to Heroku
+```
 
-sql
-Copy
-Edit
+Push the Code to Heroku
+```
 git add .
 git commit -m "Initial commit"
 git push heroku main
-Run the App
+```
 
-arduino
-Copy
-Edit
+Run the App
+```
 heroku ps:scale web=1
 heroku open
+```
+
 📌 Requirements
 Python 3.x
-
 Tkinter (Built-in with Python)
-
 Flask (For web integration)
-
-🤝 Contributing
-Feel free to fork this repo, add new features, and create a pull request! Contributions are welcome. 🚀
 
 🏆 Future Improvements
 ✔️ Add a timer to challenge players
